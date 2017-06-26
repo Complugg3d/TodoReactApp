@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TodoList from 'todo-list';
+import TodoAddForm from 'todo-add-form';
 
 class TodoApp extends Component {
   constructor(props) {
@@ -27,11 +28,15 @@ class TodoApp extends Component {
     };
 
   }
+  handleAddTodo(text) {
+    alert('new todo:' + text);
+  }
   render() {
     var { todos } = this.state;
     return (
       <div>
         <TodoList todos={todos}/>
+        <TodoAddForm onAddTodo={this.handleAddTodo.bind(this)}/>
       </div>
     )
   }

@@ -103,7 +103,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var React = __webpack_require__(10);
-	var ReactDOM = __webpack_require__(231);
+	var ReactDOM = __webpack_require__(232);
 
 
 	//load foundation
@@ -111,7 +111,7 @@
 	$(document).foundation();
 
 	//load custom css
-	__webpack_require__(232);
+	__webpack_require__(233);
 
 	ReactDOM.render(React.createElement(_todoApp2.default, null), document.getElementById('app'));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
@@ -25483,6 +25483,10 @@
 
 	var _todoList2 = _interopRequireDefault(_todoList);
 
+	var _todoAddForm = __webpack_require__(231);
+
+	var _todoAddForm2 = _interopRequireDefault(_todoAddForm);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25519,6 +25523,11 @@
 	  }
 
 	  _createClass(TodoApp, [{
+	    key: 'handleAddTodo',
+	    value: function handleAddTodo(text) {
+	      alert('new todo:' + text);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var todos = this.state.todos;
@@ -25526,7 +25535,8 @@
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement(_todoList2.default, { todos: todos })
+	        _react2.default.createElement(_todoList2.default, { todos: todos }),
+	        _react2.default.createElement(_todoAddForm2.default, { onAddTodo: this.handleAddTodo.bind(this) })
 	      );
 	    }
 	  }]);
@@ -25661,20 +25671,90 @@
 
 	'use strict';
 
-	module.exports = __webpack_require__(12);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(10);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var TodoAddForm = function (_Component) {
+	  _inherits(TodoAddForm, _Component);
+
+	  function TodoAddForm(props) {
+	    _classCallCheck(this, TodoAddForm);
+
+	    return _possibleConstructorReturn(this, (TodoAddForm.__proto__ || Object.getPrototypeOf(TodoAddForm)).call(this, props));
+	  }
+
+	  _createClass(TodoAddForm, [{
+	    key: 'onFormSubmit',
+	    value: function onFormSubmit(e) {
+	      e.preventDefault();
+	      var todoText = this.refs.todoText.value;
+	      if (todoText.length > 0) {
+	        this.refs.todoText.value = '';
+	        this.props.onAddTodo(todoText);
+	      } else {
+	        this.refs.todoText.focus();
+	      }
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'div',
+	        null,
+	        _react2.default.createElement(
+	          'form',
+	          { onSubmit: this.onFormSubmit.bind(this) },
+	          _react2.default.createElement('input', { type: 'text', ref: 'todoText', placeholder: 'What you need to do?' }),
+	          _react2.default.createElement(
+	            'button',
+	            { className: 'button expanded hollow' },
+	            'Add Todo'
+	          )
+	        )
+	      );
+	    }
+	  }]);
+
+	  return TodoAddForm;
+	}(_react.Component);
+
+	exports.default = TodoAddForm;
 
 /***/ }),
 /* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	module.exports = __webpack_require__(12);
+
+
+/***/ }),
+/* 233 */
+/***/ (function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(233);
+	var content = __webpack_require__(234);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(235)(content, {});
+	var update = __webpack_require__(236)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -25691,10 +25771,10 @@
 	}
 
 /***/ }),
-/* 233 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(234)();
+	exports = module.exports = __webpack_require__(235)();
 	// imports
 
 
@@ -25705,7 +25785,7 @@
 
 
 /***/ }),
-/* 234 */
+/* 235 */
 /***/ (function(module, exports) {
 
 	/*
@@ -25761,7 +25841,7 @@
 
 
 /***/ }),
-/* 235 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	/*
