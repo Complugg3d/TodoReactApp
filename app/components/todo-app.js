@@ -14,19 +14,23 @@ class TodoApp extends Component {
       todos: [
         {
           id: uuid(),
-          text: 'Walk the dog'
+          text: 'Walk the dog',
+          completed: false
         },
         {
           id: uuid(),
-          text: 'Clean the yard'
+          text: 'Clean the yard',
+          completed: true
         },
         {
           id: uuid(),
-          text: 'Get the goods'
+          text: 'Get the goods',
+          completed: true
         },
         {
           id: uuid(),
-          text: 'Get a hair cut'
+          text: 'Get a hair cut',
+          completed: false
         }
       ]
     };
@@ -39,6 +43,7 @@ class TodoApp extends Component {
         {
           id: uuid(),
           text: text,
+          completed: false
         }
       ]
     })

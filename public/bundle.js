@@ -25518,16 +25518,20 @@
 	      searchText: '',
 	      todos: [{
 	        id: (0, _uuid2.default)(),
-	        text: 'Walk the dog'
+	        text: 'Walk the dog',
+	        completed: false
 	      }, {
 	        id: (0, _uuid2.default)(),
-	        text: 'Clean the yard'
+	        text: 'Clean the yard',
+	        completed: true
 	      }, {
 	        id: (0, _uuid2.default)(),
-	        text: 'Get the goods'
+	        text: 'Get the goods',
+	        completed: true
 	      }, {
 	        id: (0, _uuid2.default)(),
-	        text: 'Get a hair cut'
+	        text: 'Get a hair cut',
+	        completed: false
 	      }]
 	    };
 
@@ -25540,7 +25544,8 @@
 	      this.setState({
 	        todos: [].concat(_toConsumableArray(this.state.todos), [{
 	          id: (0, _uuid2.default)(),
-	          text: text
+	          text: text,
+	          completed: false
 	        }])
 	      });
 	    }
@@ -25640,7 +25645,7 @@
 /* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	"use strict";
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
@@ -25670,17 +25675,17 @@
 	  }
 
 	  _createClass(Todo, [{
-	    key: 'render',
+	    key: "render",
 	    value: function render() {
 	      var _props = this.props,
 	          id = _props.id,
-	          text = _props.text;
+	          text = _props.text,
+	          completed = _props.completed;
 
 	      return _react2.default.createElement(
-	        'div',
+	        "div",
 	        null,
-	        id,
-	        ', ',
+	        _react2.default.createElement("input", { type: "checkbox", checked: completed }),
 	        text
 	      );
 	    }

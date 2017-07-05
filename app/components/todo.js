@@ -5,10 +5,11 @@ class Todo extends Component {
     super(props);
   }
   render() {
-    var { id, text } = this.props;
+    var { id, text, completed } = this.props;
     return (
       <div>
-        {id}, {text}
+      <input type="checkbox" checked={completed}/>
+      {text}
       </div>
     );
   }
