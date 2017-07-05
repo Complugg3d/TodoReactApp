@@ -54,12 +54,15 @@ class TodoApp extends Component {
       searchText: searchText.toLowerCase()
     });
   }
+  handleToggle(id) {
+    alert(id);
+  }
   render() {
     var { todos } = this.state;
     return (
       <div>
         <TodoSearch onSearch={this.handleSearch.bind(this)}/>
-        <TodoList todos={todos}/>
+        <TodoList todos={todos} onToggle={this.handleToggle.bind(this)}/>
         <TodoAddForm onAddTodo={this.handleAddTodo.bind(this)}/>
       </div>
     )

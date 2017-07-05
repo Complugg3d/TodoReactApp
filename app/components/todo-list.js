@@ -11,7 +11,7 @@ class TodoList extends Component {
 
     var renderTodos = () => {
       return todos.map((todo) => {
-        return <Todo key={todo.id} {...todo}/>;
+        return <Todo key={todo.id} {...todo} onToggle={this.props.onToggle}/>;
       });
     };
 
