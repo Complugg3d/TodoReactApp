@@ -26098,7 +26098,7 @@
 	      todos = JSON.parse(stringTodos);
 	    } catch (e) {}
 
-	    return $isArray(todos) ? todos : [];
+	    return _jquery2.default.isArray(todos) ? todos : [];
 	  }
 	};
 

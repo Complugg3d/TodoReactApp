@@ -16,6 +16,6 @@ module.exports = {
        
      }
      
-     return $isArray(todos) ? todos : [];         
+     return $.isArray(todos) ? todos : [];         
    }
  };
