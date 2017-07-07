@@ -103,7 +103,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var React = __webpack_require__(10);
-	var ReactDOM = __webpack_require__(238);
+	var ReactDOM = __webpack_require__(239);
 
 
 	//load foundation
@@ -111,7 +111,7 @@
 	$(document).foundation();
 
 	//load custom css
-	__webpack_require__(239);
+	__webpack_require__(240);
 
 	ReactDOM.render(React.createElement(_todoApp2.default, null), document.getElementById('app'));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
@@ -25495,6 +25495,10 @@
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
+	var _TodoAPI = __webpack_require__(238);
+
+	var _TodoAPI2 = _interopRequireDefault(_TodoAPI);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
@@ -25516,29 +25520,18 @@
 	    _this.state = {
 	      showCompleted: false,
 	      searchText: '',
-	      todos: [{
-	        id: (0, _uuid2.default)(),
-	        text: 'Walk the dog',
-	        completed: false
-	      }, {
-	        id: (0, _uuid2.default)(),
-	        text: 'Clean the yard',
-	        completed: true
-	      }, {
-	        id: (0, _uuid2.default)(),
-	        text: 'Get the goods',
-	        completed: true
-	      }, {
-	        id: (0, _uuid2.default)(),
-	        text: 'Get a hair cut',
-	        completed: false
-	      }]
+	      todos: _TodoAPI2.default.getTodos()
 	    };
 
 	    return _this;
 	  }
 
 	  _createClass(TodoApp, [{
+	    key: 'componentDidUpdate',
+	    value: function componentDidUpdate() {
+	      _TodoAPI2.default.setTodos(this.state.todos);
+	    }
+	  }, {
 	    key: 'handleAddTodo',
 	    value: function handleAddTodo(text) {
 	      this.setState({
@@ -26085,20 +26078,50 @@
 
 	'use strict';
 
-	module.exports = __webpack_require__(12);
+	var _jquery = __webpack_require__(7);
 
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = {
+	  setTodos: function setTodos(todos) {
+	    if (_jquery2.default.isArray(todos)) {
+	      localStorage.setItem('todos', JSON.stringify(todos));
+	      return todos;
+	    }
+	  },
+	  getTodos: function getTodos() {
+	    var stringTodos = localStorage.getItem('todos');
+	    var todos = [];
+	    try {
+	      todos = JSON.parse(stringTodos);
+	    } catch (e) {}
+
+	    return $isArray(todos) ? todos : [];
+	  }
+	};
 
 /***/ },
 /* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
+	'use strict';
+
+	module.exports = __webpack_require__(12);
+
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(240);
+	var content = __webpack_require__(241);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(242)(content, {});
+	var update = __webpack_require__(243)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -26115,10 +26138,10 @@
 	}
 
 /***/ },
-/* 240 */
+/* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(241)();
+	exports = module.exports = __webpack_require__(242)();
 	// imports
 
 
@@ -26129,7 +26152,7 @@
 
 
 /***/ },
-/* 241 */
+/* 242 */
 /***/ function(module, exports) {
 
 	/*
@@ -26185,7 +26208,7 @@
 
 
 /***/ },
-/* 242 */
+/* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
