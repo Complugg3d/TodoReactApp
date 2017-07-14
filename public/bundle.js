@@ -26115,7 +26115,7 @@
 	    filteredTodos = filteredTodos.filter(function (todo) {
 	      var text = todo.text.toLowerCase();
 
-	      return serachText.length === 0 || text.indexOf(serachText) > -1;
+	      return searchText.length === 0 || text.indexOf(serachText) > -1;
 	    });
 	    //Sort todos with non-completed first
 	    filteredTodos.sort(function (a, b) {
