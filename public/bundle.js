@@ -26111,11 +26111,11 @@
 	    filteredTodos = filteredTodos.filter(function (todo) {
 	      return !todo.completed || showCompleted;
 	    });
-	    //filter by serachText
+	    //filter by searchText
 	    filteredTodos = filteredTodos.filter(function (todo) {
 	      var text = todo.text.toLowerCase();
 
-	      return searchText.length === 0 || text.indexOf(serachText) > -1;
+	      return searchText.length === 0 || text.indexOf(searchText) > -1;
 	    });
 	    //Sort todos with non-completed first
 	    filteredTodos.sort(function (a, b) {
