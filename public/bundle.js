@@ -25588,10 +25588,10 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'row align-center' },
+	          { className: 'row' },
 	          _react2.default.createElement(
 	            'div',
-	            { className: 'column align-self-middle small-centered small-11 medium-6 large-5' },
+	            { className: 'column small-centered small-11 medium-6 large-centered large-5' },
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'container' },
