@@ -115,10 +115,6 @@
 	  console.log('New state', store.getState());
 	});
 
-	store.dispatch(actions.addTodo('Clean the yard'));
-	store.dispatch(actions.setSearchText('Yard'));
-	store.dispatch(actions.toggleShowCompleted());
-
 	//load foundation
 	//require('style!css!foundation-sites/dist/css/foundation.min.css');
 	$(document).foundation();
@@ -25500,15 +25496,15 @@
 
 	var _todoList2 = _interopRequireDefault(_todoList);
 
-	var _todoAddForm = __webpack_require__(373);
+	var _todoAddForm = __webpack_require__(374);
 
 	var _todoAddForm2 = _interopRequireDefault(_todoAddForm);
 
-	var _todoSearch = __webpack_require__(374);
+	var _todoSearch = __webpack_require__(375);
 
 	var _todoSearch2 = _interopRequireDefault(_todoSearch);
 
-	var _uuid = __webpack_require__(375);
+	var _uuid = __webpack_require__(376);
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
@@ -25516,7 +25512,7 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _TodoAPI = __webpack_require__(380);
+	var _TodoAPI = __webpack_require__(373);
 
 	var _TodoAPI2 = _interopRequireDefault(_TodoAPI);
 
@@ -25648,6 +25644,8 @@
 	var _require = __webpack_require__(349),
 	    connect = _require.connect;
 
+	var TodoAPI = __webpack_require__(373);
+
 	var TodoList = exports.TodoList = function (_Component) {
 	  _inherits(TodoList, _Component);
 
@@ -25660,7 +25658,10 @@
 	  _createClass(TodoList, [{
 	    key: 'render',
 	    value: function render() {
-	      var todos = this.props.todos;
+	      var _props = this.props,
+	          todos = _props.todos,
+	          showCompleted = _props.showCompleted,
+	          searchText = _props.searchText;
 
 
 	      var renderTodos = function renderTodos() {
@@ -25671,7 +25672,7 @@
 	            'Nothing To Do'
 	          );
 	        }
-	        return todos.map(function (todo) {
+	        return TodoAPI.filterTodos(todos, showCompleted, searchText).map(function (todo) {
 	          return _react2.default.createElement(_todo2.default, _extends({ key: todo.id }, todo));
 	        });
 	      };
@@ -25688,9 +25689,7 @@
 	}(_react.Component);
 
 	exports.default = connect(function (state) {
-	  return {
-	    todos: state.todos
-	  };
+	  return state;
 	})(TodoList);
 
 /***/ }),
@@ -43025,6 +43024,62 @@
 
 	'use strict';
 
+	var _jquery = __webpack_require__(7);
+
+	var _jquery2 = _interopRequireDefault(_jquery);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	module.exports = {
+	  setTodos: function setTodos(todos) {
+	    if (_jquery2.default.isArray(todos)) {
+	      localStorage.setItem('todos', JSON.stringify(todos));
+	      return todos;
+	    }
+	  },
+	  getTodos: function getTodos() {
+	    var stringTodos = localStorage.getItem('todos');
+	    var todos = [];
+	    try {
+	      todos = JSON.parse(stringTodos);
+	    } catch (e) {}
+
+	    return _jquery2.default.isArray(todos) ? todos : [];
+	  },
+	  filterTodos: function filterTodos(todos, showCompleted, searchText) {
+	    var filteredTodos = todos;
+
+	    //filter by showCompleted
+	    filteredTodos = filteredTodos.filter(function (todo) {
+	      return !todo.completed || showCompleted;
+	    });
+	    //filter by searchText
+	    filteredTodos = filteredTodos.filter(function (todo) {
+	      var text = todo.text.toLowerCase();
+
+	      return searchText.length === 0 || text.indexOf(searchText) > -1;
+	    });
+	    //Sort todos with non-completed first
+	    filteredTodos.sort(function (a, b) {
+	      if (!a.completed && b.completed) {
+	        return -1;
+	      } else if (a.completed && !b.completed) {
+	        return 1;
+	      } else {
+	        return 0;
+	      }
+	    });
+
+	    return filteredTodos;
+	  }
+	};
+
+/***/ }),
+/* 374 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -43099,14 +43154,15 @@
 	exports.default = connect()(TodoAddForm);
 
 /***/ }),
-/* 374 */
+/* 375 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.TodoSearch = undefined;
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -43122,7 +43178,12 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var TodoSearch = function (_Component) {
+	var _require = __webpack_require__(349),
+	    connect = _require.connect;
+
+	var actions = __webpack_require__(372);
+
+	var TodoSearch = exports.TodoSearch = function (_Component) {
 	  _inherits(TodoSearch, _Component);
 
 	  function TodoSearch(props) {
@@ -43130,34 +43191,45 @@
 
 	    return _possibleConstructorReturn(this, (TodoSearch.__proto__ || Object.getPrototypeOf(TodoSearch)).call(this, props));
 	  }
+	  // handleSearch() {
+	  //   var showCompleted = this.refs.showCompleted.checked;
+	  //   var searchText = this.refs.searchText.value;
+	  //
+	  //   this.props.onSearch(showCompleted, searchText);
+	  // }
 
 	  _createClass(TodoSearch, [{
-	    key: "handleSearch",
-	    value: function handleSearch() {
-	      var showCompleted = this.refs.showCompleted.checked;
-	      var searchText = this.refs.searchText.value;
-
-	      this.props.onSearch(showCompleted, searchText);
-	    }
-	  }, {
-	    key: "render",
+	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
+
+	      var _props = this.props,
+	          dispatch = _props.dispatch,
+	          showCompleted = _props.showCompleted,
+	          searchText = _props.searchText;
+
+
 	      return _react2.default.createElement(
-	        "div",
-	        { className: "container__header" },
+	        'div',
+	        { className: 'container__header' },
 	        _react2.default.createElement(
-	          "div",
+	          'div',
 	          null,
-	          _react2.default.createElement("input", { type: "search", ref: "searchText", placeholder: "Search Todos", onChange: this.handleSearch.bind(this) })
+	          _react2.default.createElement('input', { type: 'search', ref: 'searchText', placeholder: 'Search Todos', value: searchText, onChange: function onChange() {
+	              var searchText = _this2.refs.searchText.value;
+	              dispatch(actions.setSearchText(searchText));
+	            } })
 	        ),
 	        _react2.default.createElement(
-	          "div",
+	          'div',
 	          null,
 	          _react2.default.createElement(
-	            "label",
+	            'label',
 	            null,
-	            _react2.default.createElement("input", { type: "checkbox", ref: "showCompleted", onChange: this.handleSearch.bind(this) }),
-	            "Show completed Todos"
+	            _react2.default.createElement('input', { type: 'checkbox', ref: 'showCompleted', checked: showCompleted, onChange: function onChange() {
+	                dispatch(actions.toggleShowCompleted());
+	              } }),
+	            'Show completed Todos'
 	          )
 	        )
 	      );
@@ -43167,14 +43239,19 @@
 	  return TodoSearch;
 	}(_react.Component);
 
-	exports.default = TodoSearch;
+	exports.default = connect(function (state) {
+	  return {
+	    showCompleted: state.showCompleted,
+	    searchText: state.searchText
+	  };
+	})(TodoSearch);
 
 /***/ }),
-/* 375 */
+/* 376 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var v1 = __webpack_require__(376);
-	var v4 = __webpack_require__(379);
+	var v1 = __webpack_require__(377);
+	var v4 = __webpack_require__(380);
 
 	var uuid = v4;
 	uuid.v1 = v1;
@@ -43184,11 +43261,11 @@
 
 
 /***/ }),
-/* 376 */
+/* 377 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var rng = __webpack_require__(377);
-	var bytesToUuid = __webpack_require__(378);
+	var rng = __webpack_require__(378);
+	var bytesToUuid = __webpack_require__(379);
 
 	// **`v1()` - Generate time-based UUID**
 	//
@@ -43290,7 +43367,7 @@
 
 
 /***/ }),
-/* 377 */
+/* 378 */
 /***/ (function(module, exports) {
 
 	/* WEBPACK VAR INJECTION */(function(global) {// Unique ID creation requires a high quality random # generator.  In the
@@ -43330,7 +43407,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
 
 /***/ }),
-/* 378 */
+/* 379 */
 /***/ (function(module, exports) {
 
 	/**
@@ -43359,11 +43436,11 @@
 
 
 /***/ }),
-/* 379 */
+/* 380 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	var rng = __webpack_require__(377);
-	var bytesToUuid = __webpack_require__(378);
+	var rng = __webpack_require__(378);
+	var bytesToUuid = __webpack_require__(379);
 
 	function v4(options, buf, offset) {
 	  var i = buf && offset || 0;
@@ -43392,62 +43469,6 @@
 
 	module.exports = v4;
 
-
-/***/ }),
-/* 380 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _jquery = __webpack_require__(7);
-
-	var _jquery2 = _interopRequireDefault(_jquery);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	module.exports = {
-	  setTodos: function setTodos(todos) {
-	    if (_jquery2.default.isArray(todos)) {
-	      localStorage.setItem('todos', JSON.stringify(todos));
-	      return todos;
-	    }
-	  },
-	  getTodos: function getTodos() {
-	    var stringTodos = localStorage.getItem('todos');
-	    var todos = [];
-	    try {
-	      todos = JSON.parse(stringTodos);
-	    } catch (e) {}
-
-	    return _jquery2.default.isArray(todos) ? todos : [];
-	  },
-	  filterTodos: function filterTodos(todos, showCompleted, searchText) {
-	    var filteredTodos = todos;
-
-	    //filter by showCompleted
-	    filteredTodos = filteredTodos.filter(function (todo) {
-	      return !todo.completed || showCompleted;
-	    });
-	    //filter by searchText
-	    filteredTodos = filteredTodos.filter(function (todo) {
-	      var text = todo.text.toLowerCase();
-
-	      return searchText.length === 0 || text.indexOf(searchText) > -1;
-	    });
-	    //Sort todos with non-completed first
-	    filteredTodos.sort(function (a, b) {
-	      if (!a.completed && b.completed) {
-	        return -1;
-	      } else if (a.completed && !b.completed) {
-	        return 1;
-	      } else {
-	        return 0;
-	      }
-	    });
-
-	    return filteredTodos;
-	  }
-	};
 
 /***/ }),
 /* 381 */
@@ -43503,7 +43524,7 @@
 
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-	var _uuid = __webpack_require__(375);
+	var _uuid = __webpack_require__(376);
 
 	var _uuid2 = _interopRequireDefault(_uuid);
 
