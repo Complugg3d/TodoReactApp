@@ -100,6 +100,10 @@
 
 	var _todoApp2 = _interopRequireDefault(_todoApp);
 
+	var _TodoAPI = __webpack_require__(373);
+
+	var _TodoAPI2 = _interopRequireDefault(_TodoAPI);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var React = __webpack_require__(10);
@@ -111,9 +115,15 @@
 	var actions = __webpack_require__(372);
 	var store = __webpack_require__(382).configure();
 
+
 	store.subscribe(function () {
-	  console.log('New state', store.getState());
+	  var state = store.getState();
+	  console.log('New state', state);
+	  _TodoAPI2.default.setTodos(state.todos);
 	});
+
+	var initialTodos = _TodoAPI2.default.getTodos();
+	store.dispatch(actions.addTodos(initialTodos));
 
 	//load foundation
 	//require('style!css!foundation-sites/dist/css/foundation.min.css');
@@ -25512,13 +25522,7 @@
 
 	var _moment2 = _interopRequireDefault(_moment);
 
-	var _TodoAPI = __webpack_require__(373);
-
-	var _TodoAPI2 = _interopRequireDefault(_TodoAPI);
-
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -25532,52 +25536,12 @@
 	  function TodoApp(props) {
 	    _classCallCheck(this, TodoApp);
 
-	    var _this = _possibleConstructorReturn(this, (TodoApp.__proto__ || Object.getPrototypeOf(TodoApp)).call(this, props));
-
-	    _this.state = {
-	      showCompleted: false,
-	      searchText: '',
-	      todos: _TodoAPI2.default.getTodos()
-	    };
-
-	    return _this;
+	    return _possibleConstructorReturn(this, (TodoApp.__proto__ || Object.getPrototypeOf(TodoApp)).call(this, props));
 	  }
 
 	  _createClass(TodoApp, [{
-	    key: 'componentDidUpdate',
-	    value: function componentDidUpdate() {
-	      _TodoAPI2.default.setTodos(this.state.todos);
-	    }
-	  }, {
-	    key: 'handleAddTodo',
-	    value: function handleAddTodo(text) {
-	      this.setState({
-	        todos: [].concat(_toConsumableArray(this.state.todos), [{
-	          id: (0, _uuid2.default)(),
-	          text: text,
-	          completed: false,
-	          createdAt: (0, _moment2.default)().unix(),
-	          completedAt: undefined
-	        }])
-	      });
-	    }
-	  }, {
-	    key: 'handleSearch',
-	    value: function handleSearch(showCompleted, searchText) {
-	      this.setState({
-	        showCompleted: showCompleted,
-	        searchText: searchText.toLowerCase()
-	      });
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _state = this.state,
-	          todos = _state.todos,
-	          showCompleted = _state.showCompleted,
-	          searchText = _state.searchText;
-
-	      var filteredTodos = _TodoAPI2.default.filterTodos(todos, showCompleted, searchText);
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -25595,9 +25559,9 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'container' },
-	              _react2.default.createElement(_todoSearch2.default, { onSearch: this.handleSearch.bind(this) }),
+	              _react2.default.createElement(_todoSearch2.default, null),
 	              _react2.default.createElement(_todoList2.default, null),
-	              _react2.default.createElement(_todoAddForm2.default, { onAddTodo: this.handleAddTodo.bind(this) })
+	              _react2.default.createElement(_todoAddForm2.default, null)
 	            )
 	          )
 	        )
@@ -43011,6 +42975,13 @@
 	  };
 	};
 
+	var addTodos = exports.addTodos = function addTodos(todos) {
+	  return {
+	    type: 'ADD_TODOS',
+	    todos: todos
+	  };
+	};
+
 	var toggleTodo = exports.toggleTodo = function toggleTodo(id) {
 	  return {
 	    type: 'TOGGLE_TODO',
@@ -43588,7 +43559,9 @@
 	        return todo;
 	      });
 	      break;
-
+	    case 'ADD_TODOS':
+	      return [].concat(_toConsumableArray(state), _toConsumableArray(action.todos));
+	      break;
 	    default:
 	      return state;
 	  };
