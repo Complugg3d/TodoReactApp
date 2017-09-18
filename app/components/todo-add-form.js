@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
+var { connect } = require('react-redux');
+var actions = require('actions');
 
-class TodoAddForm extends Component {
+export class TodoAddForm extends Component {
   constructor(props) {
     super(props);
   }
   onFormSubmit(e) {
     e.preventDefault();
+    var { dispatch } = this.props;
     let todoText = this.refs.todoText.value;
     if(todoText.length > 0) {
       this.refs.todoText.value = '';
-      this.props.onAddTodo(todoText);
+      // this.props.onAddTodo(todoText);
+      dispatch(actions.addTodo(todoText));
     } else {
       this.refs.todoText.focus();
     }
@@ -26,4 +30,4 @@ class TodoAddForm extends Component {
   }
 }
 
-export default TodoAddForm;
+export default connect()(TodoAddForm);
