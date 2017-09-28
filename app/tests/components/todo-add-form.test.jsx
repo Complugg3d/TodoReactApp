@@ -5,6 +5,7 @@ import TestUtils from 'react-addons-test-utils';
 import $ from 'jquery';
 
 import { TodoAddForm } from 'todo-add-form';
+import * as actions from 'actions';
 
 describe('TodoApp', () => {
   it('should exist', () => {
@@ -14,10 +15,7 @@ describe('TodoApp', () => {
   it('should dispatch add todo when valid todo text', () => {
     var spy = expect.createSpy();
     var todoText = 'something very large';
-    var action = {
-      type: 'ADD_TODO',
-      text: todoText
-    }
+    var action = actions.startAddTodo(todoText);
     var todoAddForm = TestUtils.renderIntoDocument(<TodoAddForm dispatch={spy}/>);
     var $el = $(ReactDOM.findDOMNode(todoAddForm));
 
@@ -38,4 +36,4 @@ describe('TodoApp', () => {
     expect(spy).toNotHaveBeenCalled();
   });
 
-}); 
+});
