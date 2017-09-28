@@ -1,23 +1,6 @@
 import $ from 'jquery';
 
-module.exports = {
-  setTodos: function(todos) {
-    if ($.isArray(todos)) {
-      localStorage.setItem('todos', JSON.stringify(todos));
-      return todos;
-    }
-  },
-  getTodos: function() {
-    var stringTodos = localStorage.getItem('todos');
-    var todos = [];
-    try {
-      todos = JSON.parse(stringTodos);
-    } catch (e) {
-
-    }
-
-    return $.isArray(todos) ? todos : [];
-  },
+module.exports = {  
   filterTodos: function(todos, showCompleted, searchText) {
     var filteredTodos = todos;
 
@@ -28,8 +11,8 @@ module.exports = {
     //filter by searchText
     filteredTodos = filteredTodos.filter((todo) => {
       var text = todo.text.toLowerCase();
-      
-      return searchText.length === 0 || text.indexOf(searchText) > -1;      
+
+      return searchText.length === 0 || text.indexOf(searchText) > -1;
     });
     //Sort todos with non-completed first
     filteredTodos.sort((a, b) => {
