@@ -10,7 +10,7 @@ export class Login extends Component {
   render() {
     return (
       <div>
-        <form onSubmit={this.onFormSubmit.bind(this)}>
+        <form>
           <input type='text' ref="user" placeholder="User" />
           <input type='password' ref="password" placeholder="Password" />
           <button className="button expanded hollow">Login</button>
