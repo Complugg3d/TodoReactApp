@@ -25,7 +25,7 @@ ReactDOM.render(
     <Router history={hashHistory}>
       <Route path="/" component={Main}>
         <IndexRoute component={Login}/>
-        <Route path="#/todos" component={TodoApp} />
+        <Route path="todos" component={TodoApp} />
       </Route>
     </Router>
   </Provider>,
