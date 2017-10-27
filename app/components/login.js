@@ -9,12 +9,10 @@ export class Login extends Component {
   }
   render() {
     return (
-      <div>
-        <form>
-          <input type='text' ref="user" placeholder="User" />
-          <input type='password' ref="password" placeholder="Password" />
-          <button className="button expanded hollow">Login</button>
-        </form>
+      <div className="callout callout-auth">
+        <h3>Login</h3>
+        <p>login with github account below</p>
+        <button className="button">Login with GitHub</button>
       </div>
     );
   }

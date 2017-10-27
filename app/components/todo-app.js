@@ -12,7 +12,10 @@ class TodoApp extends Component {
 
   render() {
     return (
-      <div>        
+      <div>       
+        <div className="page-actions">
+          <a href="#">Logout</a>
+        </div>
         <TodoSearch/>
         <TodoList/>
         <TodoAddForm/>          
