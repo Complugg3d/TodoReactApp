@@ -7,7 +7,6 @@ export class Login extends Component {
     super(props);
   }
   onLogin() {
-    console.log('entro onLogin');
     var { dispatch } = this.props;
     dispatch(actions.startLogin());
   }
@@ -16,7 +15,7 @@ export class Login extends Component {
       <div className="callout callout-auth">
         <h3>Login</h3>
         <p>login with github account below</p>
-        <button className="button" onclick={this.onLogin.bind(this)}>Login with GitHub</button>
+        <button className="button" onClick={this.onLogin.bind(this)}>Login with GitHub</button>
       </div>
     );
   }
