@@ -1,5 +1,5 @@
-import react from 'react';
-import {Route, Router, IndexRoute, hashHistory} from 'react-router';
+import React from 'react';
+import { Route, Router, IndexRoute, hashHistory } from 'react-router';
 
 import TodoApp from 'todo-app';
 import Main from 'main';
