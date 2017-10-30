@@ -88,10 +88,17 @@ export var startToggleTodo = (id, completed) => {
   };
 };
 
+export var checkLogin = () => {
+  return {
+    type: 'DO_LOGIN'
+  };
+};
+
 export var startLogin = function () {
   return (dispatch, getState) => {
     return firebase.auth().signInWithPopup(githubProvider).then((result) => {
       console.log('success login');
+      dispatch(checkLogin());
     }, (error) => {
       console.log('Unable to auth', error);
     });
@@ -102,6 +109,7 @@ export var startLogout = function () {
   return (dispatch, getState) => {
     return firebase.auth().signOut().then(() => {
       console.log('logged out');
-    })
+      dispatch(checkLogin());
+    });
   };
 };

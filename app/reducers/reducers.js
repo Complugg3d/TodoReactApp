@@ -50,3 +50,13 @@ export var todosReducer = (state = [], action) => {
       return state;
   };
 };
+
+export var checkLoginReducer = (state = false, action) => {
+  switch(action.type) {
+    case 'DO_LOGIN':
+      return !state;  
+      break;
+    default:
+      return state;
+  };
+};

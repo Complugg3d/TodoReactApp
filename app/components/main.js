@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import moment from 'moment';
 var { connect } = require('react-redux');
 var actions = require('actions');
 
@@ -15,13 +14,19 @@ export class Main extends Component {
     dispatch(actions.startLogout());    
   }
   
+  renderLogout() => {
+    return (
+      <div className="page-actions">
+        <a href="#" onClick={this.onLogout.bind(this)}>Logout</a>
+      </div>
+    );
+  }
+  
   render() {
     var props = this.props;
     return (
       <div>
-        <div className="page-actions">
-          <a href="#" onClick={this.onLogout.bind(this)}>Logout</a>
-        </div>
+        {(props.checkLogin) ? this.renderLogout() : null}
         <h1 className="page-title">Todo App</h1>
         <div className="row">
           <div className="columns small-centered small-11 medium-6 large-5">
@@ -35,4 +40,7 @@ export class Main extends Component {
   }
 }
 
-export default connect()(Main);
+export default connect(
+  (state) => {
+    return state;
+  })(Main);
