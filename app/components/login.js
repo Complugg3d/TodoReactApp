@@ -7,6 +7,7 @@ export class Login extends Component {
     super(props);
   }
   onLogin() {
+    console.log('entro onLogin');
     var { dispatch } = this.props;
     dispatch(actions.startLogin());
   }
