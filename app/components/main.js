@@ -14,7 +14,7 @@ export class Main extends Component {
     dispatch(actions.startLogout());    
   }
   
-  renderLogout() => {
+  renderLogout() {
     return (
       <div className="page-actions">
         <a href="#" onClick={this.onLogout.bind(this)}>Logout</a>
