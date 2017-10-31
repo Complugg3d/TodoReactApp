@@ -88,11 +88,16 @@ export var startToggleTodo = (id, completed) => {
   };
 };
 
-export var checkLogin = (checkLoginObj = { loggedIn: false, uid: null}) => {
+export var checkLogin = (loggedIn, uid) => {
   return {
     type: 'DO_LOGIN',
-    loggedIn: checkLoginObj.loggedIn,
-    uid: checkLoginObj.uid
+    loggedIn,
+    uid
+  };
+};
+export var checkLogin = () => {
+  return {
+    type: 'DO_LOGOUT'
   };
 };
 
@@ -100,10 +105,7 @@ export var startLogin = function () {
   return (dispatch, getState) => {
     return firebase.auth().signInWithPopup(githubProvider).then((result) => {
       console.log('success login', result);
-      dispatch(checkLogin({
-        loggedIn: true,
-        uid: result.user.uid
-      }));
+      dispatch(checkLogin(true, result.user.uid));
     }, (error) => {
       console.log('Unable to auth', error);
     });
@@ -114,7 +116,7 @@ export var startLogout = function () {
   return (dispatch, getState) => {
     return firebase.auth().signOut().then(() => {
       console.log('logged out');
-      dispatch(checkLogin());
+      dispatch(checkLogin(false, null));
     });
   };
 };

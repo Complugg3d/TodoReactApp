@@ -62,6 +62,7 @@ export var checkLoginReducer = (state = {
         uid: action.uid
       };  
       break;
+    case 'DO_LOGOUT':  
     default:
       return state;
   };

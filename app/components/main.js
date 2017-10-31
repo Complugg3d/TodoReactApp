@@ -26,7 +26,7 @@ export class Main extends Component {
     var props = this.props;
     return (
       <div>
-        {(true) ? this.renderLogout() : null}
+        {(props.checkLogin.loggedIn) ? this.renderLogout() : null}
         <h1 className="page-title">Todo App</h1>
         <div className="row">
           <div className="columns small-centered small-11 medium-6 large-5">
