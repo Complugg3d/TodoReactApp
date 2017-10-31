@@ -51,10 +51,16 @@ export var todosReducer = (state = [], action) => {
   };
 };
 
-export var checkLoginReducer = (state = false, action) => {
+export var checkLoginReducer = (state = {
+  loggedIn: false,
+  uid: null
+}, action) => {
   switch(action.type) {
     case 'DO_LOGIN':
-      return !state;  
+      return {
+        loggedIn: state.loggedIn,
+        uid: state.uid
+      };  
       break;
     default:
       return state;
