@@ -150,4 +150,27 @@ describe('actions', () => {
       }, done);
     });
   });
+  
+  it('should do login action', () => {
+    var action = {
+      type: 'DO_LOGIN',
+      loggedIn: true,
+      uid: "123asd"
+    };
+
+    var res = actions.checkLogin(action.loggedIn, action.uid);
+
+    expect(res).toEqual(action);
+  });
+  
+  it('should do logout action', () => {
+    var action = {
+      type: 'DO_LOGOUT',
+      loggedIn: false
+    };
+
+    var res = actions.checkLogout(action.loggedIn);
+
+    expect(res).toEqual(action);
+  });
 });

@@ -121,4 +121,31 @@ describe('Reducers', () => {
       expect(res[0]).toEqual(todos[0]);
     });
   });
+  
+  describe('checkLoginReducer', () => {
+    it('should login a user', () => {      
+
+      var action = {
+        type: 'DO_LOGIN',
+        loggedIn: true,
+        uid: '123asd'
+      };
+
+      var res = reducers.checkLoginReducer(df({}), df(action));
+
+      expect(res.loggedIn).toBe(true);
+      expect(res.uid).toEqual(action.uid);
+    });
+    it('should logout a user', () => {      
+
+      var action = {
+        type: 'DO_LOGOUT',
+        loggedIn: false
+      };
+
+      var res = reducers.checkLoginReducer(df({}), df(action));
+
+      expect(res.loggedIn).toBe(false);
+    });
+  });
 });
