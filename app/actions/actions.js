@@ -97,7 +97,7 @@ export var checkLogin = () => {
 export var startLogin = function () {
   return (dispatch, getState) => {
     return firebase.auth().signInWithPopup(githubProvider).then((result) => {
-      console.log('success login');
+      console.log('success login', result);
       dispatch(checkLogin());
     }, (error) => {
       console.log('Unable to auth', error);
