@@ -95,9 +95,11 @@ export var checkLogin = (loggedIn, uid) => {
     uid
   };
 };
-export var checkLogout = () => {
+export var checkLogout = (loggedIn) => {
   return {
-    type: 'DO_LOGOUT'
+    type: 'DO_LOGOUT', 
+    loggedIn,
+    uid: undefined
   };
 };
 
@@ -116,7 +118,7 @@ export var startLogout = function () {
   return (dispatch, getState) => {
     return firebase.auth().signOut().then(() => {
       console.log('logged out');
-      dispatch(checkLogout());
+      dispatch(checkLogout(false));
     });
   };
 };
