@@ -58,7 +58,7 @@ export var checkLoginReducer = (state = {
   switch(action.type) {
     case 'DO_LOGIN':
       return {
-        loggedIn: action.loggedIn,
+        loggedIn: true,
         uid: action.uid
       };  
       break;
