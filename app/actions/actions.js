@@ -88,7 +88,7 @@ export var startToggleTodo = (id, completed) => {
   };
 };
 
-export var checkLogin = (checkLoginObj) => {
+export var checkLogin = (checkLoginObj = { loggedIn: false, uid: null}) => {
   return {
     type: 'DO_LOGIN',
     loggedIn: checkLoginObj.loggedIn,
