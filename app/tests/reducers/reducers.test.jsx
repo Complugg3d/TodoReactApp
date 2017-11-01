@@ -120,6 +120,36 @@ describe('Reducers', () => {
       expect(res.length).toEqual(3);
       expect(res[0]).toEqual(todos[0]);
     });
+    
+    it('should clear existing todos', () => {
+      var todos = [{
+        id: uuid(),
+        text: 'something 1',
+        completed: false,
+        createdAt: moment().unix(),
+        completedAt: undefined
+      },{
+        id: uuid(),
+        text: 'something 2',
+        completed: true,
+        createdAt: moment().unix(),
+        completedAt: moment().unix()
+      },{
+        id: uuid(),
+        text: 'something 3',
+        completed: false,
+        createdAt: moment().unix(),
+        completedAt: undefined
+      }];
+
+      var action = {
+        type: 'CLEAR_TODOS'
+      };
+
+      var res = reducers.todosReducer(df(todos), df(action));
+
+      expect(res.length).toEqual(0);
+    });
   });
   
   describe('checkLoginReducer', () => {

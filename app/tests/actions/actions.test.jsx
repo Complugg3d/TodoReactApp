@@ -178,4 +178,14 @@ describe('actions', () => {
 
     expect(res).toEqual(action);
   });
+  
+  it('should do clear todos action', () => {
+    var action = {
+      type: 'CLEAR_TODOS'
+    };
+
+    var res = actions.clearTodos();
+
+    expect(res).toEqual(action);
+  });
 });

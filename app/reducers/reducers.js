@@ -46,6 +46,9 @@ export var todosReducer = (state = [], action) => {
           ...action.todos
         ]
       break;
+    case 'CLEAR_TODOS':
+      return [];
+      break;
     default:
       return state;
   };

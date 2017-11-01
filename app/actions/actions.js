@@ -99,11 +99,18 @@ export var checkLogin = (loggedIn, uid) => {
     uid
   };
 };
+
 export var checkLogout = (loggedIn) => {
   return {
     type: 'DO_LOGOUT', 
     loggedIn,
     uid: undefined
+  };
+};
+
+export var clearTodos = () => {
+  return {
+    type: 'CLEAR_TODOS'
   };
 };
 
@@ -123,6 +130,7 @@ export var startLogout = function () {
     return firebase.auth().signOut().then(() => {
       console.log('logged out');
       dispatch(checkLogout(false));
+      dispatch(clearTodos());
     });
   };
 };
